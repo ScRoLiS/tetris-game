@@ -3,17 +3,20 @@ import { FigureType } from './FigureType';
 import { Utils } from './Utils';
 import { Figure } from './Figure';
 import { Config } from './Config';
+import { Field } from './Field';
 
 export class Game {
 
   private canvas: HTMLCanvasElement
   private context: CanvasRenderingContext2D
   private figure: Figure
+  private field: Field
 
   constructor(canvas: HTMLCanvasElement) {
     this.configureCanvas(canvas)
     window.addEventListener('resize', this.configureCanvas.bind(this, canvas))
 
+    this.field = new Field()
     this.figure = new Figure(Utils.getRandomColor(), FigureType.T)
 
     window.addEventListener('keydown', this.keyPressed.bind(this))
@@ -43,6 +46,7 @@ export class Game {
     ctx.fillStyle = '#ffafaf'
     ctx.fillRect(0, 0, Config.width, Config.height)
 
+    this.field.render(ctx)
     this.figure.render(ctx)
     this.renderGrid(ctx)
   }
@@ -77,6 +81,9 @@ export class Game {
         break;
       case KeyType.DOWN:
         this.figure.moveDown()
+        break;
+      case 'Enter':
+        this.field.append(this.figure)
         break;
     }
     this.render(this.context)
