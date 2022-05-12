@@ -16,7 +16,7 @@ export class FigurePart {
 
     ctx.beginPath()
     ctx.lineWidth = lineWidth
-    ctx.strokeStyle = '#999999'
+    ctx.strokeStyle = '#00000022'
     ctx.moveTo(x * Config.partSize + Config.partSize, -lineWidth / 2 + y * Config.partSize + Config.partSize)
     ctx.lineTo(x * Config.partSize, -lineWidth / 2 + y * Config.partSize + Config.partSize)
     ctx.moveTo(-lineWidth / 2 + x * Config.partSize + Config.partSize, + y * Config.partSize + Config.partSize)
@@ -25,7 +25,7 @@ export class FigurePart {
 
     ctx.beginPath()
     ctx.lineWidth = lineWidth
-    ctx.strokeStyle = '#ffffff'
+    ctx.strokeStyle = '#ffffffbb'
     ctx.moveTo(lineWidth / 2 + x * Config.partSize, lineWidth / 2 + y * Config.partSize)
     ctx.lineTo(x * Config.partSize + Config.partSize, lineWidth / 2 + y * Config.partSize)
     ctx.moveTo(lineWidth / 2 + x * Config.partSize, y * Config.partSize)
