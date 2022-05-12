@@ -14,11 +14,14 @@ export class Game {
 
   constructor(canvas: HTMLCanvasElement) {
     this.configureCanvas(canvas)
-    window.addEventListener('resize', this.configureCanvas.bind(this, canvas))
-
     this.field = new Field()
     this.figure = new Figure(Utils.getRandomColor(), FigureType.T)
 
+
+    window.addEventListener('resize', () => {
+      this.configureCanvas(canvas)
+      this.render(this.context)
+    })
     window.addEventListener('keydown', this.keyPressed.bind(this))
   }
 
@@ -33,8 +36,6 @@ export class Game {
 
     this.canvas.width = Config.width
     this.canvas.height = Config.height
-
-    // this.render(this.context)
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -43,7 +44,7 @@ export class Game {
 
     this.field.render(ctx)
     this.figure.render(ctx)
-    this.renderGrid(ctx)
+    // this.renderGrid(ctx)
   }
 
   renderGrid(ctx: CanvasRenderingContext2D) {
