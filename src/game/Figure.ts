@@ -41,4 +41,16 @@ export class Figure {
   moveRight() {
     this.x++
   }
+
+  getX(): number {
+    return this.x
+  }
+
+  getY(): number {
+    return this.y
+  }
+
+  getTemplate(): (number | FigurePart)[][] {
+    return this.template
+  }
 }
