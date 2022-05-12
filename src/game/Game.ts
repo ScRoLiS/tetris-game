@@ -20,11 +20,6 @@ export class Game {
     this.figure = new Figure(Utils.getRandomColor(), FigureType.T)
 
     window.addEventListener('keydown', this.keyPressed.bind(this))
-
-    // setInterval(() => {
-    //   this.render(this.context)
-    //   this.figure.moveDown()
-    // }, 1000)
   }
 
   configureCanvas(canvas: HTMLCanvasElement) {
@@ -71,25 +66,39 @@ export class Game {
   keyPressed(e: KeyboardEvent) {
     switch (e.key) {
       case KeyType.LEFT:
-        this.figure.moveLeft()
+        if (this.figure.getX() > 0)
+          this.figure.moveLeft()
         break;
       case KeyType.RIGHT:
-        this.figure.moveRight()
+        if (this.figure.getX() + this.figure.getTemplate()[0].length - 1 < this.field.getField()[0].length - 1)
+          this.figure.moveRight()
         break;
       case KeyType.UP:
         this.figure.turn()
         break;
       case KeyType.DOWN:
-        this.figure.moveDown()
-        break;
-      case 'Enter':
-        this.field.append(this.figure)
+        this.moveDown()
         break;
     }
-    this.render(this.context)
+  }
+
+  moveDown() {
+    if (this.figure.getY() + this.figure.getTemplate().length > this.field.getField().length - 1) {
+      this.field.append(this.figure)
+      this.figure = new Figure(Utils.getRandomColor(), FigureType.T)
+    }
+
+    this.figure.moveDown()
+  }
+
+  gamePlay() {
+    this.moveDown()
   }
 
   start() {
     this.render(this.context)
+
+    setInterval(this.gamePlay.bind(this), 1000)
+    setInterval(this.render.bind(this, this.context), 0)
   }
 }

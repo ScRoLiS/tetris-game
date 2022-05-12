@@ -50,4 +50,8 @@ export class Field {
       })
     })
   }
+
+  getField(): (number | FigurePart)[][] {
+    return this.field
+  }
 }
