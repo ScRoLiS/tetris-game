@@ -4,8 +4,10 @@ import { Config } from "./Config"
 
 export class Figure {
 
-  private x: number
+  private x: number 
   private y: number
+  private prevX: number
+  private prevY: number
   private color: string
 
   private template: (number | FigurePart)[][]
@@ -15,6 +17,8 @@ export class Figure {
     this.template = Utils.templateToFigure(color, template)
     this.x = Config.width / Config.partSize / 2 - Math.round(template[0].length / 2)
     this.y = 0
+    this.prevX = this.x
+    this.prevY = this.y
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -27,7 +31,11 @@ export class Figure {
   }
 
   turn() {
-    this.template = Utils.transposeMatrix(this.template)
+    this.template = Utils.turnFigure(this.template)
+  }
+
+  turnBackward() {
+    this.template = Utils.turnFigureBackward(this.template)
   }
 
   moveDown() {
@@ -35,10 +43,12 @@ export class Figure {
   }
 
   moveLeft() {
+    this.prevX = this.x
     this.x--
   }
 
   moveRight() {
+    this.prevX = this.x
     this.x++
   }
 
@@ -48,6 +58,21 @@ export class Figure {
 
   getY(): number {
     return this.y
+  }
+
+  setX(x: number) {
+    this.prevX = this.x
+    this.x = x
+  }
+
+  setY(y: number) {
+    this.prevY = this.y
+    this.y = y
+  }
+
+  moveToPrevXY() {
+    this.x = this.prevX
+    this.y = this.prevY
   }
 
   getTemplate(): (number | FigurePart)[][] {

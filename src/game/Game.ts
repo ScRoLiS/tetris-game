@@ -15,7 +15,7 @@ export class Game {
   constructor(canvas: HTMLCanvasElement) {
     this.configureCanvas(canvas)
     this.field = new Field()
-    this.figure = new Figure(Utils.getRandomColor(), FigureType.T)
+    this.figure = new Figure(Utils.getRandomColor(), Utils.getRandomFigure())
 
 
     window.addEventListener('resize', () => {
@@ -44,7 +44,7 @@ export class Game {
 
     this.field.render(ctx)
     this.figure.render(ctx)
-    // this.renderGrid(ctx)
+    this.renderGrid(ctx)
   }
 
   renderGrid(ctx: CanvasRenderingContext2D) {
@@ -67,29 +67,42 @@ export class Game {
   keyPressed(e: KeyboardEvent) {
     switch (e.key) {
       case KeyType.LEFT:
-        if (this.figure.getX() > 0)
-          this.figure.moveLeft()
+        this.figure.moveLeft()
+        if (this.figure.getX() < 0 || this.field.checkFieldPartCollision(this.figure))
+          this.figure.setX(this.figure.getX() + 1)
         break;
       case KeyType.RIGHT:
-        if (this.figure.getX() + this.figure.getTemplate()[0].length - 1 < this.field.getField()[0].length - 1)
-          this.figure.moveRight()
+        this.figure.moveRight()
+        if ((this.figure.getX() + this.figure.getTemplate()[0].length - 1 > this.field.getField()[0].length - 1) || this.field.checkFieldPartCollision(this.figure))
+          this.figure.setX(this.figure.getX() - 1)
         break;
       case KeyType.UP:
-        this.figure.turn()
+        this.turnFigure()
         break;
       case KeyType.DOWN:
         this.moveDown()
         break;
     }
+    this.render(this.context)
   }
 
   moveDown() {
-    if (this.figure.getY() + this.figure.getTemplate().length > this.field.getField().length - 1) {
-      this.field.append(this.figure)
-      this.figure = new Figure(Utils.getRandomColor(), FigureType.T)
-    }
-
     this.figure.moveDown()
+
+    if (this.field.checkFieldBottomCollision(this.figure)) {
+      this.field.append(this.figure)
+      this.field.checkLinesFilled(this.figure)
+      this.figure = new Figure(Utils.getRandomColor(), Utils.getRandomFigure())
+    }
+    this.render(this.context)
+  }
+
+  turnFigure() {
+    this.figure.turn()
+
+    if (this.field.checkFieldPartCollision(this.figure))
+      this.figure.turnBackward()
+
   }
 
   gamePlay() {
@@ -100,6 +113,6 @@ export class Game {
     this.render(this.context)
 
     setInterval(this.gamePlay.bind(this), 1000)
-    setInterval(this.render.bind(this, this.context), 0)
+    // setInterval(this.render.bind(this, this.context), 0)
   }
 }
