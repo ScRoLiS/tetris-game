@@ -43,12 +43,10 @@ export class Figure {
   }
 
   moveLeft() {
-    this.prevX = this.x
     this.x--
   }
 
   moveRight() {
-    this.prevX = this.x
     this.x++
   }
 
@@ -61,18 +59,11 @@ export class Figure {
   }
 
   setX(x: number) {
-    this.prevX = this.x
     this.x = x
   }
 
   setY(y: number) {
-    this.prevY = this.y
     this.y = y
-  }
-
-  moveToPrevXY() {
-    this.x = this.prevX
-    this.y = this.prevY
   }
 
   getTemplate(): (number | FigurePart)[][] {

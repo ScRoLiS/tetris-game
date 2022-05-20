@@ -101,12 +101,10 @@ export class Field {
     const template = figure.getTemplate()
 
     if (figure.getY() + template.length >= this.field.length + 1) {
-      figure.setY(figure.getY() - 1)
       return true
     }
 
     if (this.checkFieldPartCollision(figure)) {
-      figure.setY(figure.getY() - 1)
       return true
     }
 

@@ -1,5 +1,4 @@
 import { KeyType } from './KeyType';
-import { FigureType } from './FigureType';
 import { Utils } from './Utils';
 import { Figure } from './Figure';
 import { Config } from './Config';
@@ -11,6 +10,7 @@ export class Game {
   private context: CanvasRenderingContext2D
   private figure: Figure
   private field: Field
+  private gameTimer: NodeJS.Timer
 
   constructor(canvas: HTMLCanvasElement) {
     this.configureCanvas(canvas)
@@ -90,9 +90,13 @@ export class Game {
     this.figure.moveDown()
 
     if (this.field.checkFieldBottomCollision(this.figure)) {
+      this.figure.setY(this.figure.getY() - 1)
       this.field.append(this.figure)
       this.field.checkLinesFilled(this.figure)
       this.figure = new Figure(Utils.getRandomColor(), Utils.getRandomFigure())
+      if (this.field.checkFieldBottomCollision(this.figure)) {
+        this.stop()
+      }
     }
     this.render(this.context)
   }
@@ -109,10 +113,15 @@ export class Game {
     this.moveDown()
   }
 
+  stop() {
+    console.log('STOP');
+    clearInterval(this.gameTimer)
+  }
+
   start() {
     this.render(this.context)
 
-    setInterval(this.gamePlay.bind(this), 1000)
+    this.gameTimer = setInterval(this.gamePlay.bind(this), 1000)
     // setInterval(this.render.bind(this, this.context), 0)
   }
 }
