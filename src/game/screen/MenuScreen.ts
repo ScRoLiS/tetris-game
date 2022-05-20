@@ -78,10 +78,10 @@ export default class MenuScreen extends Screen {
         this.game.setScreen(tetris)
         break;
       case 'Options':
-        console.log('OPTIONS');
+        alert('SOON')
         break;
       case 'About':
-        console.log('ABOUT');
+        alert('SOON')
         break;
       case 'Github':
         window.open('https://github.com/scrolis/tetris-game', '_blank');

@@ -24,6 +24,7 @@ export default class Game {
   configureCanvas(canvas: HTMLCanvasElement) {
     this.canvas = canvas
     this.context = canvas.getContext('2d')
+    this.context.translate(0.5, 0.5)
 
     Config.setConfig({
       width: window.innerHeight / 20 * 10,
