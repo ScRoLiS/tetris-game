@@ -61,8 +61,8 @@ export class Field {
   renderRemove(lines: number[], tetris: TetrisScreen) {
     this.lines = lines
     this.animationTimer = setInterval(() => {
-      this.cubes.push(new FigurePart('#00ffaa'))
-      this.cubes.push(new FigurePart('#00ffaa'))
+      this.cubes.push(new FigurePart('#ECF0F1'))
+      this.cubes.push(new FigurePart('#ECF0F1'))
 
       tetris.render(tetris.game.context)
 
@@ -74,7 +74,7 @@ export class Field {
         clearInterval(this.animationTimer)
         return
       }
-    }, 40)
+    }, 60)
   }
 
   append(figure: Figure) {
