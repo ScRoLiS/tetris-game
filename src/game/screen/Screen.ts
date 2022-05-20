@@ -2,7 +2,7 @@ import Game from "../Game";
 
 export default abstract class Screen {
 
-  protected game: Game
+  public game: Game
 
   constructor(game: Game) {
     this.game = game

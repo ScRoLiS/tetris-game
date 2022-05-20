@@ -2,7 +2,7 @@ import Game from '../Game';
 import Screen from './Screen'
 import { Utils } from '../Utils';
 import { Field } from '../Field';
-import { Figure } from '../figure';
+import { Figure, FigureType } from '../figure';
 import { Config } from '../Config';
 import { KeyType } from '../KeyType';
 
@@ -16,20 +16,21 @@ export default class TetrisScreen extends Screen {
     super(game)
     this.field = new Field()
     this.figure = new Figure(Utils.getRandomColor(), Utils.getRandomFigure())
+    // this.figure = new Figure(Utils.getRandomColor(), FigureType[7])
   }
 
   render(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = '#ffafaf'
     ctx.fillRect(0, 0, Config.width, Config.height)
 
-    this.field.render(ctx)
     this.figure.render(ctx)
+    this.field.render(ctx)
     this.renderGrid(ctx)
   }
 
   renderGrid(ctx: CanvasRenderingContext2D) {
     ctx.strokeStyle = '#000000'
-    ctx.lineWidth = 0.5
+    ctx.lineWidth = 0.2
     for (let i = 0; i <= Config.width / Config.partSize; i++) {
       ctx.beginPath();
       ctx.moveTo(i * Config.partSize, 0);
@@ -71,8 +72,12 @@ export default class TetrisScreen extends Screen {
     if (this.field.checkFieldBottomCollision(this.figure)) {
       this.figure.setY(this.figure.getY() - 1)
       this.field.append(this.figure)
-      this.field.checkLinesFilled(this.figure)
+      const lines = this.field.checkLinesFilled(this.figure)
+      if (lines.length && !this.field.cubes.length)
+        this.field.renderRemove(lines, this)
       this.figure = new Figure(Utils.getRandomColor(), Utils.getRandomFigure())
+      // this.figure = new Figure(Utils.getRandomColor(), FigureType[7])
+
       if (this.field.checkFieldBottomCollision(this.figure)) {
         this.stop()
       }
@@ -94,6 +99,10 @@ export default class TetrisScreen extends Screen {
 
   stop() {
     console.log('STOP');
+    clearInterval(this.gameTimer)
+  }
+
+  pause() {
     clearInterval(this.gameTimer)
   }
 

@@ -3,9 +3,11 @@ import { Config } from '../Config';
 export default class FigurePart {
 
   color: string
+  y: number
 
-  constructor(color: string) {
+  constructor(color: string, y?: number) {
     this.color = color
+    this.y = y
   }
 
   render(x: number, y: number, ctx: CanvasRenderingContext2D) {
