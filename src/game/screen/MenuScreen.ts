@@ -5,12 +5,14 @@ import { Field } from './../Field';
 import { Config } from '../Config';
 import { KeyType } from './../KeyType';
 import { FigurePart } from 'game/figure';
+import { Utils } from '../Utils';
 
 export default class MenuScreen extends Screen {
 
-  menu = ['Start', 'Options', 'About', 'Github']
   index = 0
   field: Field
+  color: string
+  menu = ['Start', 'Options', 'About', 'Github']
 
   fieldTemplate: (number | FigurePart)[][] = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
@@ -39,12 +41,13 @@ export default class MenuScreen extends Screen {
   constructor(game: Game) {
     super(game)
     this.field = new Field(this.fieldTemplate)
+    this.color = Utils.getRandomColor()
   }
 
   render(ctx: CanvasRenderingContext2D) {
     const fontSize = Config.height * 5 / 100
 
-    ctx.fillStyle = '#3498DB'
+    ctx.fillStyle = this.color
     ctx.fillRect(0, 0, Config.width, Config.height)
 
 
