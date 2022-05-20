@@ -1,32 +1,11 @@
-import { Config } from "../Config"
+import Game from "../Game";
 
 export default abstract class Screen {
 
-  protected canvas: HTMLCanvasElement
-  protected context: CanvasRenderingContext2D
+  protected game: Game
 
-  constructor(canvas: HTMLCanvasElement) {
-    this.configureCanvas(canvas)
-
-    window.addEventListener('resize', () => {
-      this.configureCanvas(canvas)
-      this.render(this.context)
-    })
-
-    window.addEventListener('keydown', this.keyPressed.bind(this))
-  }
-
-  configureCanvas(canvas: HTMLCanvasElement) {
-    this.canvas = canvas
-    this.context = canvas.getContext('2d')
-
-    Config.setConfig({
-      width: window.innerHeight / 20 * 10,
-      height: window.innerHeight
-    })
-
-    this.canvas.width = Config.width
-    this.canvas.height = Config.height
+  constructor(game: Game) {
+    this.game = game
   }
 
   abstract render(ctx: CanvasRenderingContext2D): void

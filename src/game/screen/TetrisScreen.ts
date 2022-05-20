@@ -1,41 +1,21 @@
-import { KeyType } from '../KeyType';
+import Game from '../Game';
+import Screen from './Screen'
 import { Utils } from '../Utils';
+import { Field } from '../Field';
 import { Figure } from '../figure';
 import { Config } from '../Config';
-import { Field } from '../Field';
+import { KeyType } from '../KeyType';
 
-export class TetrisScreen {
+export default class TetrisScreen extends Screen {
 
-  private canvas: HTMLCanvasElement
-  private context: CanvasRenderingContext2D
   private figure: Figure
   private field: Field
   private gameTimer: NodeJS.Timer
 
-  constructor(canvas: HTMLCanvasElement) {
-    this.configureCanvas(canvas)
+  constructor(game: Game) {
+    super(game)
     this.field = new Field()
     this.figure = new Figure(Utils.getRandomColor(), Utils.getRandomFigure())
-
-
-    window.addEventListener('resize', () => {
-      this.configureCanvas(canvas)
-      this.render(this.context)
-    })
-    window.addEventListener('keydown', this.keyPressed.bind(this))
-  }
-
-  configureCanvas(canvas: HTMLCanvasElement) {
-    this.canvas = canvas
-    this.context = canvas.getContext('2d')
-
-    Config.setConfig({
-      width: window.innerHeight / 20 * 10,
-      height: window.innerHeight
-    })
-
-    this.canvas.width = Config.width
-    this.canvas.height = Config.height
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -83,7 +63,6 @@ export class TetrisScreen {
         this.moveDown()
         break;
     }
-    this.render(this.context)
   }
 
   moveDown() {
@@ -98,7 +77,7 @@ export class TetrisScreen {
         this.stop()
       }
     }
-    this.render(this.context)
+    this.render(this.game.context)
   }
 
   turnFigure() {
@@ -119,8 +98,6 @@ export class TetrisScreen {
   }
 
   start() {
-    this.render(this.context)
-
     this.gameTimer = setInterval(this.gamePlay.bind(this), 1000)
     // setInterval(this.render.bind(this, this.context), 0)
   }

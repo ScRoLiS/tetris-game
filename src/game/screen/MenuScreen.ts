@@ -1,7 +1,9 @@
-import { Field } from './../Field';
-import { KeyType } from './../KeyType';
-import { Config } from '../Config';
+import Game from '../Game';
 import Screen from "./Screen";
+import TetrisScreen from './TetrisScreen';
+import { Field } from './../Field';
+import { Config } from '../Config';
+import { KeyType } from './../KeyType';
 import { FigurePart } from 'game/figure';
 
 export default class MenuScreen extends Screen {
@@ -34,11 +36,9 @@ export default class MenuScreen extends Screen {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]
   ]
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas)
+  constructor(game: Game) {
+    super(game)
     this.field = new Field(this.fieldTemplate)
-
-    this.render(this.context)
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -67,7 +67,9 @@ export default class MenuScreen extends Screen {
   select() {
     switch (this.menu[this.index]) {
       case 'Start':
-        console.log('START');
+        const tetris = new TetrisScreen(this.game)
+        tetris.start()
+        this.game.setScreen(tetris)
         break;
       case 'Options':
         console.log('OPTIONS');
@@ -97,7 +99,6 @@ export default class MenuScreen extends Screen {
         this.select()
         break;
     }
-    this.render(this.context)
   }
 
 }
