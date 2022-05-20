@@ -2,5 +2,6 @@ export enum KeyType {
   RIGHT = 'ArrowRight',
   LEFT = 'ArrowLeft',
   UP = 'ArrowUp',
-  DOWN = 'ArrowDown'
+  DOWN = 'ArrowDown',
+  ENTER = 'Enter'
 }

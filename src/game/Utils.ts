@@ -1,5 +1,4 @@
-import { FigureType } from './FigureType';
-import { FigurePart } from './FigurePart';
+import { FigureType, FigurePart } from './figure';
 
 export class Utils {
 

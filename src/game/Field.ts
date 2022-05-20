@@ -1,5 +1,5 @@
-import { Figure } from './Figure';
-import { FigurePart } from './FigurePart';
+import { Utils } from './Utils';
+import { Figure, FigurePart } from './figure';
 
 export class Field {
 
@@ -26,8 +26,16 @@ export class Field {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
   ]
 
-  constructor() {
-
+  constructor(field?: (number | FigurePart)[][]) {
+    if (field) {
+      this.field = field.map((row) => {
+        return row.map((item) => {
+          if (item === 1)
+            return new FigurePart(Utils.getRandomColor())
+          else return item
+        })
+      })
+    }
   }
 
   render(ctx: CanvasRenderingContext2D) {

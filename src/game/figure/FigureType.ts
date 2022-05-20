@@ -1,4 +1,4 @@
-export const FigureType = [
+const FigureType = [
   [
     [1, 1, 1, 1]
   ],
@@ -32,3 +32,5 @@ export const FigureType = [
     [1, 0]
   ]
 ]
+
+export default FigureType

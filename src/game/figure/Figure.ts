@@ -1,24 +1,18 @@
-import { Utils } from './Utils';
-import { FigurePart } from './FigurePart';
-import { Config } from "./Config"
+import { Utils } from '../Utils'
+import { Config } from "../Config"
+import FigurePart from './FigurePart'
 
-export class Figure {
+export default class Figure {
 
-  private x: number 
+  private x: number
   private y: number
-  private prevX: number
-  private prevY: number
-  private color: string
 
   private template: (number | FigurePart)[][]
 
   constructor(color: string, template: number[][]) {
-    this.color = color
     this.template = Utils.templateToFigure(color, template)
     this.x = Config.width / Config.partSize / 2 - Math.round(template[0].length / 2)
     this.y = 0
-    this.prevX = this.x
-    this.prevY = this.y
   }
 
   render(ctx: CanvasRenderingContext2D) {

@@ -1,10 +1,10 @@
-import { KeyType } from './KeyType';
-import { Utils } from './Utils';
-import { Figure } from './figure';
-import { Config } from './Config';
-import { Field } from './Field';
+import { KeyType } from '../KeyType';
+import { Utils } from '../Utils';
+import { Figure } from '../figure';
+import { Config } from '../Config';
+import { Field } from '../Field';
 
-export class Game {
+export class TetrisScreen {
 
   private canvas: HTMLCanvasElement
   private context: CanvasRenderingContext2D

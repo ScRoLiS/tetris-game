@@ -1,6 +1,6 @@
-import { Config } from './Config';
+import { Config } from '../Config';
 
-export class FigurePart {
+export default class FigurePart {
 
   color: string
 
