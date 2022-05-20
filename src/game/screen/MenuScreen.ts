@@ -12,6 +12,7 @@ export default class MenuScreen extends Screen {
   index = 0
   field: Field
   color: string
+  menuColor: string
   menu = ['Start', 'Options', 'About', 'Github']
 
   fieldTemplate: (number | FigurePart)[][] = [
@@ -42,6 +43,8 @@ export default class MenuScreen extends Screen {
     super(game)
     this.field = new Field(this.fieldTemplate)
     this.color = Utils.getRandomColor()
+    this.menuColor = Utils.invertColor(this.color)
+
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -63,7 +66,7 @@ export default class MenuScreen extends Screen {
       ctx.fillText(item, Config.width / 2, Config.height / 2 - this.menu.length / 2 * fontSize + i * fontSize)
     })
 
-    ctx.fillStyle = '#34495E'
+    ctx.fillStyle = this.menuColor
     ctx.fillText(this.menu[this.index], Config.width / 2, Config.height / 2 - this.menu.length / 2 * fontSize + this.index * fontSize)
   }
 
